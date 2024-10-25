@@ -145,6 +145,10 @@ Pacman.Ghost = function (game, map, colour) {
             top  = (position.y/10) * s,
             left = (position.x/10) * s;
     
+        // Clear the previous position
+        ctx.fillStyle = "#000";
+        ctx.fillRect(left, top, s, s);
+        
         if (eatable && secondsAgo(eatable) > 8) {
             eatable = null;
         }
@@ -201,19 +205,18 @@ Pacman.Ghost = function (game, map, colour) {
         ctx.closePath();
         ctx.fill();
 
-        // Change ghost shape to a Christmas tree
-        ctx.fillStyle = colour;
+        ctx.fillStyle = "#228B22";
         ctx.beginPath();
         ctx.moveTo(left + s/2, top);
         ctx.lineTo(left, top + s);
         ctx.lineTo(left + s, top + s);
         ctx.closePath();
         ctx.fill();
-
+ 
         // Add a tree trunk
         ctx.fillStyle = "#8B4513";
         ctx.fillRect(left + s/2 - s/10, top + s, s/5, s/4);
-
+ 
         // Add ornaments
         ctx.fillStyle = "#FFD700";
         ctx.beginPath();
