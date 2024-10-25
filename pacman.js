@@ -515,7 +515,7 @@ Pacman.User = function (game, map) {
         var s     = map.blockSize, 
             angle = calcAngle(direction, position);
 
-        ctx.fillStyle = "#C41E3A"; // Change Pacman color to Santa red
+        ctx.fillStyle = "#FFFF00";
 
         ctx.beginPath();        
 
@@ -529,20 +529,6 @@ Pacman.User = function (game, map) {
         
         ctx.fill();    
 
-        // Add Santa hat
-        ctx.fillStyle = "#FFFFFF";
-        ctx.beginPath();
-        ctx.moveTo(((position.x/10) * s) + s / 2, ((position.y/10) * s));
-        ctx.lineTo(((position.x/10) * s) + s, ((position.y/10) * s) - s / 2);
-        ctx.lineTo(((position.x/10) * s), ((position.y/10) * s) - s / 2);
-        ctx.closePath();
-        ctx.fill();
-
-        // Add hat pom-pom
-        ctx.fillStyle = "#FFFFFF";
-        ctx.beginPath();
-        ctx.arc(((position.x/10) * s) + s / 2, ((position.y/10) * s) - s / 2, s / 6, 0, 2 * Math.PI);
-        ctx.fill();
     };
     
     initUser();
