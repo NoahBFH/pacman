@@ -140,15 +140,11 @@ Pacman.Ghost = function (game, map, colour) {
     };
 
     function draw(ctx) {
-  
+
         var s    = map.blockSize, 
             top  = (position.y/10) * s,
             left = (position.x/10) * s;
     
-        // Clear the previous position
-        ctx.fillStyle = "#000";
-        ctx.fillRect(left, top, s, s);
-        
         if (eatable && secondsAgo(eatable) > 8) {
             eatable = null;
         }
@@ -161,8 +157,8 @@ Pacman.Ghost = function (game, map, colour) {
         var base = top + s - 3;
         var inc = s / 10;
 
-        var high = game.getTick() % 10 > 5 ? 3  : -3;
-        var low  = game.getTick() % 10 > 5 ? -3 : 3;
+        var high = game.getTick() % 10 > 5 ? 3 : -3;
+        var low = game.getTick() % 10 > 5 ? -3 : 3;
 
         ctx.fillStyle = getColour();
         ctx.beginPath();
@@ -170,9 +166,9 @@ Pacman.Ghost = function (game, map, colour) {
         ctx.moveTo(left, base);
 
         ctx.quadraticCurveTo(left, top, left + (s/2),  top);
-        ctx.quadraticCurveTo(left + s, top, left+s,  base);
+        ctx.quadraticCurveTo(left + s, top, left + s, base);
         
-        // Wavy things at the bottom
+        // Wavy bottom
         ctx.quadraticCurveTo(tl-(inc*1), base+high, tl - (inc * 2),  base);
         ctx.quadraticCurveTo(tl-(inc*3), base+low, tl - (inc * 4),  base);
         ctx.quadraticCurveTo(tl-(inc*5), base+high, tl - (inc * 6),  base);
@@ -184,8 +180,8 @@ Pacman.Ghost = function (game, map, colour) {
 
         ctx.beginPath();
         ctx.fillStyle = "#FFF";
-        ctx.arc(left + 6,top + 6, s / 6, 0, 300, false);
-        ctx.arc((left + s) - 6,top + 6, s / 6, 0, 300, false);
+        ctx.arc(left + 6, top + 6, s / 6, 0, 300, false);
+        ctx.arc((left + s) - 6, top + 6, s / 6, 0, 300, false);
         ctx.closePath();
         ctx.fill();
 
@@ -196,32 +192,13 @@ Pacman.Ghost = function (game, map, colour) {
         off[UP]    = [0, -f];
         off[DOWN]  = [0, f];
 
-        ctx.beginPath();
         ctx.fillStyle = "#000";
+        ctx.beginPath();
         ctx.arc(left+6+off[direction][0], top+6+off[direction][1], 
                 s / 15, 0, 300, false);
         ctx.arc((left+s)-6+off[direction][0], top+6+off[direction][1], 
                 s / 15, 0, 300, false);
         ctx.closePath();
-        ctx.fill();
-
-        ctx.fillStyle = "#228B22";
-        ctx.beginPath();
-        ctx.moveTo(left + s/2, top);
-        ctx.lineTo(left, top + s);
-        ctx.lineTo(left + s, top + s);
-        ctx.closePath();
-        ctx.fill();
- 
-        // Add a tree trunk
-        ctx.fillStyle = "#8B4513";
-        ctx.fillRect(left + s/2 - s/10, top + s, s/5, s/4);
- 
-        // Add ornaments
-        ctx.fillStyle = "#FFD700";
-        ctx.beginPath();
-        ctx.arc(left + s/3, top + s/2, s/10, 0, 2 * Math.PI);
-        ctx.arc(left + 2*s/3, top + 2*s/3, s/10, 0, 2 * Math.PI);
         ctx.fill();
 
     };
@@ -518,7 +495,7 @@ Pacman.User = function (game, map) {
         var s     = map.blockSize, 
             angle = calcAngle(direction, position);
 
-        ctx.fillStyle = "#FFFF00";
+        ctx.fillStyle = "#C41E3A"; // Change Pacman color to Santa red
 
         ctx.beginPath();        
 
