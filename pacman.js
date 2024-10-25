@@ -128,7 +128,7 @@ Pacman.Ghost = function (game, map, colour) {
 
     function getColour() { 
         if (eatable) { 
-            if (secondsAgo(eatable) > 5) { 
+            if (secondsAgo(eatable) > 5) {
                 return game.getTick() % 20 > 10 ? "#FFFFFF" : "#0000BB";
             } else { 
                 return "#0000BB";
@@ -199,6 +199,26 @@ Pacman.Ghost = function (game, map, colour) {
         ctx.arc((left+s)-6+off[direction][0], top+6+off[direction][1], 
                 s / 15, 0, 300, false);
         ctx.closePath();
+        ctx.fill();
+
+        // Change ghost shape to a Christmas tree
+        ctx.fillStyle = colour;
+        ctx.beginPath();
+        ctx.moveTo(left + s/2, top);
+        ctx.lineTo(left, top + s);
+        ctx.lineTo(left + s, top + s);
+        ctx.closePath();
+        ctx.fill();
+
+        // Add a tree trunk
+        ctx.fillStyle = "#8B4513";
+        ctx.fillRect(left + s/2 - s/10, top + s, s/5, s/4);
+
+        // Add ornaments
+        ctx.fillStyle = "#FFD700";
+        ctx.beginPath();
+        ctx.arc(left + s/3, top + s/2, s/10, 0, 2 * Math.PI);
+        ctx.arc(left + 2*s/3, top + 2*s/3, s/10, 0, 2 * Math.PI);
         ctx.fill();
 
     };
@@ -320,13 +340,13 @@ Pacman.User = function (game, map) {
         resetPosition();
         eaten = 0;
     };
-    
+
     function resetPosition() {
         position = {"x": 90, "y": 120};
         direction = LEFT;
         due = LEFT;
     };
-    
+
     function reset() {
         initUser();
         resetPosition();
@@ -484,7 +504,7 @@ Pacman.User = function (game, map) {
         ctx.moveTo(((position.x/10) * size) + half, 
                    ((position.y/10) * size) + half);
         
-        ctx.arc(((position.x/10) * size) + half, 
+        ctx.arc(((position.x/10) * size) + half,
                 ((position.y/10) * size) + half,
                 half, 0, Math.PI * 2 * amount, true); 
         
@@ -492,11 +512,10 @@ Pacman.User = function (game, map) {
     };
 
     function draw(ctx) { 
-
         var s     = map.blockSize, 
             angle = calcAngle(direction, position);
 
-        ctx.fillStyle = "#FFFF00";
+        ctx.fillStyle = "#C41E3A"; // Change Pacman color to Santa red
 
         ctx.beginPath();        
 
@@ -509,6 +528,21 @@ Pacman.User = function (game, map) {
                 Math.PI * angle.end, angle.direction); 
         
         ctx.fill();    
+
+        // Add Santa hat
+        ctx.fillStyle = "#FFFFFF";
+        ctx.beginPath();
+        ctx.moveTo(((position.x/10) * s) + s / 2, ((position.y/10) * s));
+        ctx.lineTo(((position.x/10) * s) + s, ((position.y/10) * s) - s / 2);
+        ctx.lineTo(((position.x/10) * s), ((position.y/10) * s) - s / 2);
+        ctx.closePath();
+        ctx.fill();
+
+        // Add hat pom-pom
+        ctx.fillStyle = "#FFFFFF";
+        ctx.beginPath();
+        ctx.arc(((position.x/10) * s) + s / 2, ((position.y/10) * s) - s / 2, s / 6, 0, 2 * Math.PI);
+        ctx.fill();
     };
     
     initUser();
@@ -645,7 +679,6 @@ Pacman.Map = function (size) {
     };
     
     function drawBlock(y, x, ctx) {
-
         var layout = map[y][x];
 
         if (layout === Pacman.PILL) {
@@ -662,14 +695,16 @@ Pacman.Map = function (size) {
                          blockSize, blockSize);
 
             if (layout === Pacman.BISCUIT) {
-                ctx.fillStyle = "#FFF";
-		        ctx.fillRect((x * blockSize) + (blockSize / 2.5), 
-                             (y * blockSize) + (blockSize / 2.5), 
-                             blockSize / 6, blockSize / 6);
+                ctx.fillStyle = "#C41E3A"; // Change dots to red (ornaments)
+                ctx.beginPath();
+                ctx.arc((x * blockSize) + (blockSize / 2),
+                        (y * blockSize) + (blockSize / 2),
+                        blockSize / 6, 0, Math.PI * 2, false);
+                ctx.fill();
 	        }
         }
         ctx.closePath();	 
-    };
+    }
 
     reset();
     
@@ -775,7 +810,7 @@ var PACMAN = (function () {
     var state        = WAITING,
         audio        = null,
         ghosts       = [],
-        ghostSpecs   = ["#00FFDE", "#FF0000", "#FFB8DE", "#FFB847"],
+        ghostSpecs   = ["#C41E3A", "#228B22", "#FFFFFF", "#FFD700"],
         eatenCount   = 0,
         level        = 0,
         tick         = 0,

@@ -11,19 +11,57 @@
 	    font-weight: normal;
 	    font-style: normal;
       }
+      body {
+        width: 342px;
+        margin: 0px auto;
+        font-family: sans-serif;
+        background-color: #0C4128; /* Dark green background */
+        color: #FFFFFF;
+      }
       #pacman {
-        height:450px;
-        width:342px;
-        margin:20px auto;
+        height: 450px;
+        width: 342px;
+        margin: 20px auto;
+        border: 10px solid #C41E3A; /* Red border */
+        box-shadow: 0 0 20px #FFD700; /* Gold glow */
       }
       #shim { 
         font-family: BDCartoonShoutRegular; 
-        position:absolute;
-        visibility:hidden
+        position: absolute;
+        visibility: hidden;
       }
-      h1 { font-family: BDCartoonShoutRegular; text-align:center; }
-      body { width:342px; margin:0px auto; font-family:sans-serif; }
-      a { text-decoration:none; }
+      h1 { 
+        font-family: BDCartoonShoutRegular; 
+        text-align: center;
+        color: #FFD700; /* Gold text */
+        text-shadow: 2px 2px 4px #C41E3A; /* Red text shadow */
+      }
+      a { text-decoration: none; }
+      /* Snowfall effect */
+      .snowflake {
+        color: #fff;
+        font-size: 1em;
+        font-family: Arial, sans-serif;
+        text-shadow: 0 0 5px #000;
+        position: fixed;
+        top: -10%;
+        z-index: 9999;
+        user-select: none;
+        cursor: default;
+        animation-name: snowflakes-fall, snowflakes-shake;
+        animation-duration: 10s, 3s;
+        animation-timing-function: linear, ease-in-out;
+        animation-iteration-count: infinite, infinite;
+        animation-play-state: running, running;
+      }
+      @keyframes snowflakes-fall {
+        0% { top: -10%; }
+        100% { top: 100%; }
+      }
+      @keyframes snowflakes-shake {
+        0%, 100% { transform: translateX(0); }
+        50% { transform: translateX(80px); }
+      }
     </style>
 
 </head>
@@ -35,11 +73,18 @@
   <h1>Pacman</h1>
 
   <div id="pacman"></div>
+  
+  <!-- Add snowflakes -->
+  <div class="snowflake">❅</div>
+  <div class="snowflake">❅</div>
+  <div class="snowflake">❆</div>
+  <div class="snowflake">❄</div>
+  <div class="snowflake">❅</div>
+
   <script src="pacman.js"></script>
   <script src="modernizr-1.5.min.js"></script>
 
   <script>
-
     var el = document.getElementById("pacman");
 
     if (Modernizr.canvas && Modernizr.localstorage && 
