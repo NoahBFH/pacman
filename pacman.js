@@ -495,7 +495,7 @@ Pacman.User = function (game, map) {
         var s     = map.blockSize, 
             angle = calcAngle(direction, position);
 
-        ctx.fillStyle = "#C41E3A"; // Change Pacman color to Santa red
+        ctx.fillStyle = "#FFFF00"; 
 
         ctx.beginPath();        
 
