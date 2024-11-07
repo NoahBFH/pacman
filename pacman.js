@@ -23,6 +23,14 @@ var NONE        = 4,
 
 Pacman.FPS = 30;
 
+function sendScore(score) {
+  try {
+    window.parent.postMessage({ score: score }, '*');
+  } catch (error) {
+    console.error('Error sending score:', error);
+  }
+}
+
 Pacman.Ghost = function (game, map, colour) {
 
     var position  = null,
@@ -599,7 +607,7 @@ Pacman.Map = function (size) {
     function setBlock(pos, type) {
         map[pos.y][pos.x] = type;
     };
-
+    
     function drawPills(ctx) { 
 
         if (++pillSize > 30) {
@@ -853,8 +861,17 @@ var PACMAN = (function () {
             return user.keyDown(e);
         }
         return true;
-    }    
+    }  
 
+    function endGame() {
+  if (score > highscore) {
+    highscore = score;
+    sendScore(highscore); // Send the high score to SharePoint
+  }
+  alert(`Game Over! Your Score: ${score}`);
+  // Add any additional game-over logic here
+}
+	
     function loseLife() {        
         setState(WAITING);
         user.loseLife();
