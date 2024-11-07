@@ -296,7 +296,6 @@ Pacman.User = function (game, map) {
         if (score >= 10000 && score - nScore < 10000) { 
             lives += 1;
         }
-	window.parent.postMessage({ score: score }, '*');
     };
 
     function theScore() { 
@@ -857,12 +856,15 @@ var PACMAN = (function () {
     }    
 
     function loseLife() {        
-        setState(WAITING);
-        user.loseLife();
-        if (user.getLives() > 0) {
-            startLevel();
-        }
+    setState(WAITING);
+    user.loseLife();
+    if (user.getLives() > 0) {
+        startLevel();
+    } else {
+        // Game over, send the score
+        window.parent.postMessage({ score: user.theScore() }, '*');
     }
+}
 
     function setState(nState) { 
         state = nState;
